@@ -1,0 +1,274 @@
+<?xml version='1.0' encoding='ISO-8859-1' ?>
+<!DOCTYPE html>
+<html lang="pt_BR"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:jsf="http://xmlns.jcp.org/jsf"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:bob="http://xmlns.jcp.org/jsf/composite/components">
+    <head jsf:id="head">
+        <title>Dashboard</title>
+        <meta name="description" content="Dashboard"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <!-- Google Fonts -->
+        <link rel="stylesheet" href="/dashboardstatic/resources/css/bootstrap.min.css"/>
+        <link rel="stylesheet" href="/dashboardstatic/resources/css/bootstrap-responsive.min.css"/>
+        <link rel="stylesheet" href="/dashboardstatic/resources/css/font-awesome.min.css" />
+        <link rel="stylesheet" href="/dashboardstatic/resources/css/ace.min.css" />
+        <link rel="stylesheet" href="/dashboardstatic/resources/css/ace-responsive.min.css" />
+        <link rel="stylesheet" href="/dashboardstatic/resources/ace-skins.min.css" />
+        <link rel="stylesheet" href="/dashboardstatic/resources/css/colorbox.css"/>
+        <link rel="stylesheet" href="resources/static/css/jquery-ui-1.10.3.custom.min.css"/>
+        <link rel="stylesheet" href="/dashboardstatic/resources/css/datepicker.css"/>
+        <ui:insert name="head"/>
+    </head>
+    <body jsf:id="body">
+        <div class="navbar">
+            <div class="navbar-inner">
+                <div class="container-fluid">
+                    <a href="#" class="brand">
+                        <small>
+                            Stefanini 
+                            <i class="icon-dashboard"></i>
+                            Dashboard - BoB
+                        </small>
+                    </a><!--/.brand-->
+
+                    <ul class="nav ace-nav pull-right">
+                        <li class="light-blue">
+                            <a data-toggle="dropdown" href="#" class="dropdown-toggle">
+                                <span class="user-info">
+                                    <small>Bem-vindo,</small>
+                                    <b>#{logged.login}</b>
+                                </span>
+                            </a>
+                        </li>
+                    </ul><!--/.ace-nav-->
+                </div><!--/.container-fluid-->
+            </div><!--/.navbar-inner-->
+        </div>
+
+        <div class="main-container container-fluid">
+            <a class="menu-toggler" id="menu-toggler" href="#">
+                <span class="menu-text"></span>
+            </a>
+
+            <div class="sidebar" id="sidebar">
+                <form class="nav nav-list" jsf:id="sidebarForm">
+                    <li>
+                        <a jsf:action="index?faces-redirect=true">
+                            <i class="icon-dashboard"></i>
+                            <span class="menu-text"> Indicadores </span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#" class="dropdown-toggle">
+                            <i class="icon-edit-sign"></i>
+                            <span class="menu-text"> Métricas </span>
+                            <b class="arrow icon-angle-down"/>
+                        </a>
+
+                        <ul class="submenu">
+                            <li>
+                                <a jsf:action="sonar?faces-redirect=true">
+                                    <i class="icon-circle"></i>  
+                                    Sonar
+                                </a>
+                            </li>
+
+                            <li>
+                                <a jsf:action="code_coverage?faces-redirect=true">
+                                    <i class="icon-circle"></i>  
+                                    Cobertura de Código
+                                </a>
+                            </li>
+
+                            <li>
+                                <a jsf:action="products?faces-redirect=true">
+                                    <i class="icon-circle"></i>  
+                                    Produtos Entregues
+                                </a>
+                            </li>
+
+                            <li>
+                                <a jsf:action="enterprise_architect?faces-redirect=true">
+                                    <i class="icon-circle"></i>  
+                                    Enterprise Architect
+                                </a>
+                            </li>
+
+                            <li>
+                                <a jsf:action="code_review?faces-redirect=true">
+                                    <i class="icon-circle"></i>  
+                                    Análise de Código
+                                </a>
+                            </li>
+
+                            <li>
+                                <a jsf:action="client_review?faces-redirect=true">
+                                    <i class="icon-circle"></i>  
+                                    Análise Cielo
+                                </a>
+                            </li>
+
+                            <li>
+                                <a jsf:action="timebox?faces-redirect=true">
+                                    <i class="icon-circle"></i>  
+                                    Prazo
+                                </a>
+                            </li>
+
+                            <li>
+                                <a jsf:action="test_cases?faces-redirect=true">
+                                    <i class="icon-circle"></i>  
+                                    Casos de Teste
+                                </a>
+                            </li>
+
+                            <li>
+                                <a jsf:action="history?faces-redirect=true">
+                                    <i class="icon-time"></i>
+                                    <span class="menu-text"> Histórico </span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a jsf:action="tickets?faces-redirect=true">
+                            <i class="icon-list"></i>
+                            <span class="menu-text"> Produtos </span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a jsf:action="logbook_cad?faces-redirect=true">
+                            <i class="icon-edit"></i>
+                            <span class="menu-text"> Diário de Bordo </span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a jsf:action="profiles?faces-redirect=true">
+                            <i class="icon-group"></i>
+                            <span class="menu-text"> Equipe </span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#" class="dropdown-toggle">
+                            <i class="icon-cogs"></i>
+                            <span class="menu-text"> Configurações </span>
+                            <b class="arrow icon-angle-down"/>
+                        </a>
+
+                        <ul class="submenu">
+                            <li>
+                                <a jsf:action="user_config?faces-redirect=true">
+                                    <i class="icon-user"></i>
+                                    Usuário
+                                </a>
+                            </li>
+
+                            <li>
+                                <a jsf:action="team_config?faces-redirect=true">
+                                    <i class="icon-group"></i>
+                                    Times
+                                </a>
+                            </li>
+
+                            <li>
+                                <a jsf:action="job_config?faces-redirect=true">
+                                    <i class="icon-briefcase"></i>
+                                    Cargos
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a jsf:action="#{userLogged.logout()}">
+                            <i class="icon-off"></i>
+                            <span class="menu-text">Sair</span>
+                        </a>
+                    </li>
+                </form><!--/.nav-list-->
+
+                <div class="sidebar-collapse" id="sidebar-collapse">
+                    <i class="icon-double-angle-left"/>
+                </div>
+            </div>
+            <div class="main-content">
+                <div class="page-content">
+                    <bob:message/>
+                    <ui:insert name="content"/>
+                </div>
+            </div>
+        </div>
+
+        <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-medium btn-inverse">
+            <i class="icon-double-angle-up icon-only bigger-110"/>
+        </a>
+
+        <!--basic scripts-->
+        <script src="/dashboardstatic/resources/js/jquery-2.0.3.min.js"></script>
+        <script src="/dashboardstatic/resources/js/jquery.mobile.custom.min.js"></script>
+        <script src="/dashboardstatic/resources/js/jquery.dataTables.min.js"/>
+        <script src="/dashboardstatic/resources/js/jquery.dataTables.bootstrap.js"/>
+        <script src="/dashboardstatic/resources/js/bootstrap.min.js"></script>
+        <script src="/dashboardstatic/resources/js/jquery-ui-1.10.3.custom.min.js"></script>
+        <script src="/dashboardstatic/resources/js/jquery.gritter.min.js"/>
+        <script src="/dashboardstatic/resources/js/spin.min.js"/>
+        <script src="/dashboardstatic/resources/js/ace-elements.min.js"></script>
+        <script src="/dashboardstatic/resources/js/ace.min.js"></script>
+        <script src="/dashboardstatic/resources/js/template.js"/>
+        <script src="/dashboardstatic/resources/js/bootstrap.min.js"></script>
+        <script src="/dashboardstatic/resources/js/bootbox.min.js"></script>
+
+        <script src="/dashboardstatic/resources/assets-2/js/jquery.min.js"></script>
+        <script src="/dashboardstatic/resources/assets-2/js/jquery.parallax.js"></script>
+        <script src="/dashboardstatic/resources/assets-2/js/modernizr-2.6.2.min.js"></script>
+        <script src="/dashboardstatic/resources/assets-2/js/revolution-slider/js/jquery.themepunch.revolution.min.js"></script>
+        <script src="/dashboardstatic/resources/assets-2/js/jquery.nivo.slider.pack.js"></script>
+        <script src="/dashboardstatic/resources/assets-2/js/jquery.prettyPhoto.js"></script>
+        <script src="/dashboardstatic/resources/assets-2/js/superfish.js"></script>
+        <script src="/dashboardstatic/resources/assets-2/js/tweetMachine.js"></script>
+        <script src="/dashboardstatic/resources/assets-2/js/tytabs.js"></script>
+        <script src="/dashboardstatic/resources/assets-2/js/jquery.sticky.js"></script>
+        <script src="/dashboardstatic/resources/assets-2/js/jflickrfeed.js"></script>
+        <script src="/dashboardstatic/resources/assets-2/js/imagesloaded.pkgd.min.js"></script>
+        <script src="/dashboardstatic/resources/assets-2/js/waypoints.min.js"></script>
+        <script src="/dashboardstatic/resources/assets-2/js/jquery.gmap.min.js"></script>
+        <script src="/dashboardstatic/resources/assets-2/js/jquery.isotope.js"></script>
+        <script src="/dashboardstatic/resources/assets-2/js/portfolio.js"></script>
+        <script src="/dashboardstatic/resources/assets-2/js/custom.js"></script>
+        <script type="text/javascript">
+            function showDetail(text) {
+                bootbox.dialog({
+                    message : text,
+                    title : "Detalhes",
+                    buttons : {
+                        success : {
+                            label : "Ok",
+                            class : "btn-success"
+                        }
+                    }
+                });
+            }
+        </script>
+        <script type="text/javascript">
+            function showMessage(msg) {
+                bootbox.dialog({
+                    message : msg.detail,
+                    title : msg.title,
+                    buttons : {
+                        success : {
+                            label : "Ok",
+                            class : "btn-success"
+                        }
+                    }
+                });
+            }
+        </script>
+    </body>
+</html>

@@ -1,0 +1,88 @@
+<?xml version='1.0' encoding='ISO-8859-1' ?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="_Template.xhtml"
+                xmlns:jsf="http://xmlns.jcp.org/jsf"      
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <ui:define name="content">
+        <div class="widget-header widget-header-blue">
+            <h4 class="lighter">Diário de Bordo: #{logbookBean.team.name}</h4>
+        </div>
+        <table class="table table-bordered">
+            <thread>
+                <tr class="table-header">
+                    <th class="center">Descrição</th>
+                    <th class="center">Observações</th>
+                    <th class="center">Recurso</th>
+                    <th class="center">Impacto</th>
+                    <th class="center">Ações</th>
+                </tr>
+            </thread>
+            <tbody>
+                <form jsf:id="tableForm">
+                    <ui:repeat var="log" value="#{logbookBean.logbooks}">
+                        <tr>
+                            <td class="center">
+                                #{log.descr}
+                            </td>
+                            <td>
+                                <ui:fragment rendered="#{not empty log.obsBroken}">
+                                    <ui:repeat var="obs" value="#{log.obsBroken}">
+                                        #{obs}<br/>
+                                    </ui:repeat>
+                                </ui:fragment>
+                            </td>
+                            <ui:fragment rendered="#{not empty log.employee}">
+                                <td class="center">
+                                    #{log.employee.name}
+                                </td>
+                            </ui:fragment>
+                            <ui:fragment rendered="#{empty log.employee}">
+                                <td class="center">
+                                    Todos
+                                </td>
+                            </ui:fragment>
+                            <td class="center">
+                                #{log.impact}
+                            </td>
+                            <td class="center">
+                                <button class="btn btn-mini btn-danger" title="Remover"
+                                        jsf:action="#{logbookBean.remove()}">
+                                    <i class="icon-trash"/>
+                                    <f:setPropertyActionListener target="#{logbookBean.selected}" value="#{log}"/>
+                                </button>
+                                <button class="btn btn-mini btn-warning" title="Alterar"
+                                        jsf:action="#{logbookBean.edit()}">
+                                    <i class="icon-edit"/>
+                                    <f:setPropertyActionListener target="#{logbookBean.selected}" value="#{log}"/>
+                                </button>
+                            </td>
+                        </tr>
+                    </ui:repeat>
+                </form>
+            </tbody>
+        </table>
+
+        <form jsf:id="pagForm">
+            <div class="wizard-actions">
+                <button class="btn btn-small" jsf:id="btnPrev"
+                        jsf:action="#{logbookBean.prev()}"
+                        jsf:disabled="#{logbookBean.page lt logbookBean.max}">
+                    <i class="icon-arrow-left"></i>
+                    Anterior
+                </button>
+                <button class="btn btn-next btn-small" jsf:id="btnNext"
+                        jsf:action="#{logbookBean.next()}"
+                        jsf:disabled="#{empty logbookBean.logbooks 
+                                        or logbookBean.logbooks.size() lt logbookBean.max}">
+                    Próximo
+                    <i class="icon-arrow-right"></i>
+                </button>
+            </div>
+        </form>
+    </ui:define>
+
+</ui:composition>

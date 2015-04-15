@@ -1,0 +1,108 @@
+<?xml version='1.0' encoding='ISO-8859-1' ?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="_Template.xhtml"
+                xmlns:jsf="http://xmlns.jcp.org/jsf"      
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <ui:define name="head">
+        <!-- Library CSS -->
+        <link rel="stylesheet" href="/dashboardstatic/resources/assets-2/css/bootstrap.css" />
+        <link rel="stylesheet" href="/dashboardstatic/resources/assets-2/css/animations.css" media="screen" />
+        <link rel="stylesheet" href="/dashboardstatic/resources/assets-2/css/superfish.css" media="screen" />
+        <link rel="stylesheet" href="/dashboardstatic/resources/assets-2/css/prettyPhoto.css"
+              media="screen" />
+        <!-- Theme CSS -->
+        <link rel="stylesheet" href="/dashboardstatic/resources/assets-2/css/style.css" />
+        <!-- Skin -->
+        <link rel="stylesheet" href="/dashboardstatic/resources/assets-2/css/colors/blue.css" />
+        <!-- Responsive CSS -->
+        <link rel="stylesheet" href="/dashboardstatic/resources/assets-2/css/theme-responsive.css" />
+        <link rel="stylesheet" href="/dashboardstatic/resources/assets-2/css/ace.min.css" />
+        <link rel="stylesheet" href="/dashboardstatic/resources/assets-2/css/ace-responsive.min.css" />
+        <link rel="stylesheet" href="/dashboardstatic/resources/assets-2/css/ace-skins.min.css" />
+    </ui:define>
+
+    <ui:define name="content">
+        <div class="wrap">
+            <div id="options">
+                <ul id="filters" class="option-set clearfix" data-option-key="filter">
+                    <li>
+                        <a href="#filter" data-option-value="*" class="selected">
+                            Todos
+                        </a>
+                    </li>
+                    <ui:repeat var="t" value="#{teamBean.allTeams}">
+                        <li>
+                            <a href="#filter" data-option-value=".#{t.JQueryName}">
+                                #{t.name}
+                            </a>
+                        </li>
+                    </ui:repeat>
+                    <ui:repeat var="j" value="#{jobBean.jobs}">
+                        <li>
+                            <a href="#filter" data-option-value=".#{j.JQueryName}">
+                                #{j.title}
+                            </a>
+                        </li>
+                    </ui:repeat>
+                </ul>
+            </div>
+        </div>
+
+        <div class="clearfix"></div>
+
+        <div>
+            <form jsf:id="cadForm">
+                <button class="btn btn-success btn-small" jsf:action="profile_cad?faces-redirect=true"
+                        jsf:disabled="#{not userLogged.hasPermission('REMOVE_EMPLOYEE')}">
+                    <i class="icon-edit"></i>
+                    Cadastrar
+                </button>
+            </form>
+        </div>
+
+        <div class="portfolio-wrap">
+            <div class="portfolio">
+                <ui:repeat var="e" value="#{employesBean.employees}">
+                    <div class="item #{e.dataOption}">
+                        <div class="portfolio-item">
+                            <h:graphicImage value="/uploads/#{e.id}.png" width="80px;" height="215px;"/>
+                            <div class="portfolio-item-title">
+                                <b>#{e.name}</b><br/>
+                                #{e.job.title}
+                                <ui:fragment rendered="#{not empty e.team}">
+                                    (#{e.team.name})
+                                </ui:fragment>
+                            </div>
+                            <div class="align-right">
+                                <form jsf:id="actionForm">
+                                    <button class="btn btn-danger btn-mini" jsf:id="btnRemove"
+                                            jsf:action="#{employesBean.remove()}"
+                                            jsf:disabled="#{not userLogged.hasPermission('REMOVE_EMPLOYEE')}">
+                                        <i class="icon-trash"></i>
+                                        Remover
+                                        <f:setPropertyActionListener target="#{employesBean.selected}"
+                                                                     value="#{e}"/>
+                                    </button>
+                                    <button class="btn btn-warning btn-mini" jsf:id="btnEdit" 
+                                            jsf:action="#{employesBean.edit()}"
+                                            jsf:disabled="#{not userLogged.hasPermission('REMOVE_EMPLOYEE')}">
+                                        <i class="icon-pencil"></i>
+                                        Editar
+                                        <f:setPropertyActionListener target="#{employesBean.selected}"
+                                                                     value="#{e}"/>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </ui:repeat>
+            </div>
+        </div>
+
+    </ui:define>
+
+</ui:composition>

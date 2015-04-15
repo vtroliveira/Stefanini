@@ -1,0 +1,68 @@
+<?xml version='1.0' encoding='ISO-8859-1' ?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="_Template.xhtml"
+                xmlns:jsf="http://xmlns.jcp.org/jsf"      
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <ui:define name="content">
+        <div class="page-header position-relative green">
+            <h2>Produtos</h2>
+        </div>
+        <form jsf:id="form1">
+            <div class="user-profile row-fluid span12">
+                <div class="profile-user-info profile-user-info-striped span10">
+                    <div class="profile-info-row">
+                        <div class="profile-info-name">
+                            Planejado
+                        </div>
+                        <div class="profile-info-value">
+                            <input type="number" min="0" placeholder="Total de produtos planejado"
+                                   jsf:value="#{productsBean.metric.plan}"/>
+                        </div>
+                    </div>
+                    
+                    <div class="profile-info-row">
+                        <div class="profile-info-name">
+                            Realizado
+                        </div>
+                        <div class="profile-info-value">
+                            <input type="number" min="0" placeholder="Total de produtos concluídos"
+                                   jsf:value="#{productsBean.metric.done}"/>
+                        </div>
+                    </div>
+                    
+                    <div class="profile-info-row">
+                        <div class="profile-info-name">
+                            Time
+                        </div>
+                        <div class="profile-info-value">
+                            <h:selectOneMenu value="#{productsBean.metric.team}" converter="beanConverter">
+                                <f:selectItems value="#{teamBean.teams}" var="team" itemLabel="#{team.name}"/>
+                            </h:selectOneMenu>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br/>
+            <br/>
+            <br/>
+            <div class="row-fluid wizard-actions">
+                <button class="btn btn-next btn-success" jsf:id="btnSave"
+                        jsf:action="#{productsBean.save()}">
+                    <i class="icon-save"></i>
+                    Salvar
+                </button>
+                <button class="btn btn-next btn-success" jsf:id="btnSaveAndNext"
+                        jsf:action="#{productsBean.saveAndNext('enterprise_architect')}">
+                    <i class="icon-save"></i>
+                    Salvar e Próximo
+                    <i class="icon-arrow-right"></i>
+                </button>
+            </div>
+        </form>
+    </ui:define>
+
+</ui:composition>

@@ -1,0 +1,108 @@
+<?xml version='1.0' encoding='ISO-8859-1' ?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="_Template.xhtml"
+                xmlns:jsf="http://xmlns.jcp.org/jsf"      
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <ui:define name="content">
+        <div class="page-header position-relative green">
+            <h2>Cadastrar Produto</h2>
+        </div>
+        <form jsf:id="form1" enctype="multipart/form-data" accept-charset="ISO-8859-1">
+            <div class="user-profile row-fluid span12">
+                <div class="profile-user-info profile-user-info-striped span10">
+                    <div class="profile-info-row">
+                        <div class="profile-info-name">
+                            Nome
+                        </div>
+                        <div class="profile-info-value">
+                            <input type="text" required="true"
+                                   jsf:value="#{cadTicketBean.selected.product}"/>
+                        </div>
+                    </div>
+                    
+                    <div class="profile-info-row">
+                        <div class="profile-info-name">
+                            Timebox
+                        </div>
+                        <div class="profile-info-value">
+                            <input type="number" required="true" min="0"
+                                   jsf:value="#{cadTicketBean.tb.number}"/>
+                        </div>
+                    </div>
+
+                    <div class="profile-info-row">
+                        <div class="profile-info-name">
+                            Etapa
+                        </div>
+                        <div class="profile-info-value">
+                            <h:selectOneMenu value="#{cadTicketBean.tb.phase}">
+                                <f:selectItems value="#{ticketBean.phases}" var="phase" itemLabel="#{phase}"/>
+                            </h:selectOneMenu>
+                        </div>
+                    </div>
+
+                    <div class="profile-info-row">
+                        <div class="profile-info-name">
+                            Time
+                        </div>
+                        <div class="profile-info-value">
+                            <h:selectOneMenu value="#{cadTicketBean.selected.team}" converter="beanConverter">
+                                <f:selectItems value="#{teamBean.teams}" var="team" itemLabel="#{team.name}"/>
+                            </h:selectOneMenu>
+                        </div>
+                    </div>
+                    
+                    <div class="profile-info-row">
+                        <div class="profile-info-name">
+                            ALMs
+                        </div>
+                        <div class="profile-info-value" jsf:id="almCad">
+                            <ui:fragment rendered="#{not empty cadTicketBean.selected.alms and not cadTicketBean.newAlm}">
+                                <ui:repeat var="alm" value="#{cadTicketBean.selected.alms}">
+                                    #{alm.title}
+                                    <a jsf:action="#{cadTicketBean.removeAlm()}" title="Remover">
+                                        <i class="icon-trash red"/>
+                                        <f:setPropertyActionListener target="#{cadTicketBean.alm}" value="#{alm}"/>
+                                        <f:ajax event="click" render="almCad" execute="@this"/>
+                                    </a><br/>
+                                </ui:repeat>
+                            </ui:fragment>
+                            <ui:fragment rendered="#{not cadTicketBean.newAlm}">
+                                <h:commandLink immediate="true">
+                                    Adicionar ALM
+                                    <f:setPropertyActionListener target="#{cadTicketBean.newAlm}" value="#{true}"/>
+                                </h:commandLink>
+                            </ui:fragment>
+                            
+                            <ui:fragment rendered="#{cadTicketBean.newAlm}">
+                                <input type="number" jsf:value="#{cadTicketBean.alm.title}" min="1" placeholder="Número do ALM"/>
+                                <button class="btn btn-success btn-mini" title="Adicionar"
+                                        jsf:action="#{cadTicketBean.addAlm()}">
+                                    <i class="icon-ok bigger-120"/>
+                                    <f:setPropertyActionListener target="#{cadTicketBean.newAlm}" value="#{false}"/>
+                                </button>
+                                <button class="btn btn-danger btn-mini" title="Cancelar" jsf:id="btnAddAlmCancel">
+                                    <i class="icon-remove bigger-120"/>
+                                    <f:setPropertyActionListener target="#{cadTicketBean.newAlm}" value="#{false}"/>
+                                </button>
+                            </ui:fragment>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br/><br/><br/>
+            <div class="row-fluid wizard-actions">
+                <button class="btn btn-next btn-success" jsf:id="btnInsert"
+                        jsf:action="#{cadTicketBean.save()}">
+                    <i class="icon-edit"></i>
+                    Salvar
+                </button>
+            </div>
+        </form>
+    </ui:define>
+
+</ui:composition>

@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='ISO-8859-1' ?>
+<!DOCTYPE html>
+<html lang="pt_BR"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:jsf="http://xmlns.jcp.org/jsf">
+    <head jsf:id="head">
+        <title>Dashboard</title>
+        <meta name="description" content="Eva" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="ISO-8859-1"/>
+        <!-- Google Fonts -->
+        <link href="/dashboardstatic/resources/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="/dashboardstatic/resources/css/bootstrap-responsive.min.css" rel="stylesheet" />
+        <link rel="stylesheet" href="/dashboardstatic/resources/css/font-awesome.min.css" />
+        <link rel="stylesheet" href="/dashboardstatic/resources/css/ace.min.css" />
+        <link rel="stylesheet" href="/dashboardstatic/resources/css/ace-responsive.min.css" />
+        <link rel="stylesheet" href="/dashboardstatic/resources/css/ace-skins.min.css" />
+    </head>
+    <body jsf:id="body">
+        <div class="main-container container-fluid">
+            <div class="page-content center">
+                <div class="row-fluid">
+                    <div class="span12">
+                        <div class="error-container">
+                            <div class="well">
+                                <h1 class="grey lighter smaller">
+                                    <span class="blue bigger-125"><i class="icon-warning-sign"></i>
+                                        =[
+                                    </span> Ah não <b>#{logged.login}</b>! Você não tem permissão para acessar esta página
+                                </h1>
+                                <hr/>
+                                <h3 class="lighter smaller">
+                                    Contate o administrador para verificar seu perfil de acesso
+                                </h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--basic scripts-->
+        <script src="/dashboardstatic/resources/js/jquery-2.0.3.min.js"></script>
+        <script src="/dashboardstatic/resources/js/bootstrap.min.js"></script>
+        <script src="/dashboardstatic/resources/js/jquery.mobile.custom.min.js"></script>
+        <script src="/dashboardstatic/resources/js/ace-elements.min.js"></script>
+        <script src="/dashboardstatic/resources/js/ace.min.js"></script>
+    </body>
+</html>

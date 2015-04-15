@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='ISO-8859-1' ?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="_Template.xhtml"
+                xmlns:jsf="http://xmlns.jcp.org/jsf"      
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <ui:define name="content">
+        <div class="page-header position-relative green">
+            <h2>Cadastrar Time</h2>
+        </div>
+        <form jsf:id="form1" accept-charset="ISO-8859-1">
+            <div class="user-profile row-fluid span12">
+                <div class="profile-user-info profile-user-info-striped span10">
+                    <div class="profile-info-row">
+                        <div class="profile-info-name">
+                            Nome
+                        </div>
+                        <div class="profile-info-value">
+                            <input type="text" placeholder="Nome do time" jsf:value="#{cadTeamBean.selected.name}"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="profile-user-info profile-user-info-striped span10">
+                    <div class="profile-info-row">
+                        <div class="profile-info-name">
+                            Tem Indicadores
+                        </div>
+                        <div class="profile-info-value">
+                            <h:selectOneMenu value="#{cadTeamBean.selected.metrics}">
+                                <f:selectItems var="opt" value="#{cadTeamBean.charOptions}"/>
+                            </h:selectOneMenu>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br/>
+            <br/>
+            <br/>
+            <div class="row-fluid wizard-actions">
+                <button class="btn btn-next btn-success" jsf:id="btnInsert"
+                        jsf:action="#{cadTeamBean.save()}">
+                    <i class="icon-save"></i>
+                    Salvar
+                </button>
+                <button class="btn btn-next btn-danger" jsf:id="btnCancel"
+                        jsf:immediate="true" jsf:action="team_config?faces-redirect=true">
+                    <i class="icon-remove"></i>
+                    Cancelar
+                </button>
+            </div>
+        </form>
+    </ui:define>
+</ui:composition>

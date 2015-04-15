@@ -1,0 +1,227 @@
+<?xml version='1.0' encoding='ISO-8859-1' ?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="_Template.xhtml"
+                xmlns:jsf="http://xmlns.jcp.org/jsf"      
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <ui:define name="content">
+        <div class="page-header position-relative green">
+            <h2>Histórico de Modificações</h2>
+        </div>
+        <form jsf:id="form1">
+            <div class="user-profile row-fluid span12">
+                <div class="profile-user-info profile-user-info-striped span10">
+                    <div class="profile-info-row">
+                        <div class="profile-info-name">
+                            Time
+                        </div>
+                        <div class="profile-info-value">
+                            <h:selectOneMenu value="#{historyBean.team}" converter="beanConverter">
+                                <f:selectItems itemLabel="Todos"/>
+                                <f:selectItems value="#{teamBean.teams}" var="team" itemLabel="#{team.name}"/>
+                            </h:selectOneMenu>
+                        </div>
+                    </div>
+
+                    <div class="profile-info-row">
+                        <div class="profile-info-name">
+                            Data
+                        </div>
+                        <div class="profile-info-value">
+                            <h:selectOneMenu value="#{historyBean.date}">
+                                <f:selectItems value="#{historyBean.weekDates}" var="dt"/>
+                            </h:selectOneMenu>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row-fluid wizard-actions">
+                <button class="btn btn-next" jsf:id="btnSearch"
+                        jsf:action="#{historyBean.show()}">
+                    <i class="icon-search"></i>
+                    Buscar
+                </button>
+            </div>
+        </form>
+
+        <ui:fragment rendered="#{not empty historyBean.metrics}">
+
+            <table class="table table-bordered">
+                <thread>
+                    <tr class="table-header">
+                        <th class="center">Sonar</th>
+                        <th class="center">Cobertura de Código</th>
+                        <th class="center">EA</th>
+                        <th class="center">Análise de Código</th>
+                        <th class="center">Análise Cielo</th>
+                        <th class="center">Prazo</th>
+                        <th class="center">Erros Testes</th>
+                    </tr>
+                </thread>
+                <tbody>
+                    <form jsf:id="tableForm">
+                        <ui:repeat var="metric" value="#{historyBean.metrics}">
+                            <tr>
+                                <td class="center">
+                                    <ui:fragment rendered="#{not empty metric.sonar}">
+                                        <ui:fragment rendered="#{metric.sonar.blockersAndCriticals gt 0}">
+                                            <div class="badge badge-important" onclick="showDetail('#{metric.sonar.asHtml}')">
+                                                #{metric.sonar.blockersAndCriticals}    
+                                            </div>
+                                        </ui:fragment>
+                                        <ui:fragment rendered="#{metric.sonar.blockersAndCriticals eq 0}">
+                                            <div class="badge badge-success" onclick="showDetail('#{metric.sonar.asHtml}')">
+                                                0
+                                            </div>
+                                        </ui:fragment>
+                                    </ui:fragment>
+                                </td>
+
+                                <td class="center">
+                                    <ui:fragment rendered="#{not empty metric.coverage}">
+                                        <ui:fragment rendered="#{metric.coverage.coverage lt 90}">
+                                            <div class="badge badge-important">
+                                                #{metric.coverage.coverage}%
+                                            </div>
+                                        </ui:fragment>
+                                        <ui:fragment rendered="#{metric.coverage.coverage ge 90}">
+                                            <div class="badge badge-success">
+                                                #{metric.coverage.coverage}%
+                                            </div>
+                                        </ui:fragment>
+                                    </ui:fragment>
+                                </td>
+
+                                <td class="center">
+                                    <ui:fragment rendered="#{not empty metric.ea}">
+                                        <ui:fragment rendered="#{metric.ea.status eq 'Ok'}">
+                                            <i class="icon-circle green" title="Ok"/>
+                                        </ui:fragment>
+                                        <ui:fragment rendered="#{metric.ea.status eq 'Warn'}">
+                                            <i class="icon-circle orange2" title="Atenção"/>
+                                        </ui:fragment>
+                                        <ui:fragment rendered="#{metric.ea.status eq 'Nok'}">
+                                            <i class="icon-circle red" title="Nok"/>
+                                        </ui:fragment>
+                                    </ui:fragment>
+                                </td>
+
+                                <td class="center">
+                                    <ui:fragment rendered="#{not empty metric.codeReview}">
+                                        <ui:fragment rendered="#{metric.codeReview.status eq 'Ok'}">
+                                            <ui:fragment rendered="#{not empty metric.codeReview.notes}">
+                                                <i class="icon-circle green" title="#{metric.codeReview.notes}"/>
+                                            </ui:fragment>
+                                            <ui:fragment rendered="#{empty metric.codeReview.notes}">
+                                                <i class="icon-circle green" title="Ok"/>
+                                            </ui:fragment>
+                                        </ui:fragment>
+                                        <ui:fragment rendered="#{metric.codeReview.status eq 'Warn'}">
+                                            <ui:fragment rendered="#{not empty metric.codeReview.notes}">
+                                                <i class="icon-circle green" title="#{metric.codeReview.notes}"/>
+                                            </ui:fragment>
+                                            <ui:fragment rendered="#{empty metric.codeReview.notes}">
+                                                <i class="icon-circle green" title="Atenção"/>
+                                            </ui:fragment>
+                                        </ui:fragment>
+                                        <ui:fragment rendered="#{metric.codeReview.status eq 'Nok'}">
+                                            <ui:fragment rendered="#{not empty metric.codeReview.notes}">
+                                                <i class="icon-circle green" title="#{metric.codeReview.notes}"/>
+                                            </ui:fragment>
+                                            <ui:fragment rendered="#{empty metric.codeReview.notes}">
+                                                <i class="icon-circle green" title="Nok"/>
+                                            </ui:fragment>
+                                        </ui:fragment>
+                                    </ui:fragment>
+                                </td>
+
+                                <td class="center">
+                                    <ui:fragment rendered="#{not empty metric.clientReview}">
+                                        <ui:fragment rendered="#{metric.clientReview.status eq 'Ok'}">
+                                            <ui:fragment rendered="#{not empty metric.clientReview.notes}">
+                                                <i class="icon-circle green" title="#{metric.clientReview.notes}"/>
+                                            </ui:fragment>
+                                            <ui:fragment rendered="#{empty metric.clientReview.notes}">
+                                                <i class="icon-circle green" title="Ok"/>
+                                            </ui:fragment>
+                                        </ui:fragment>
+                                        <ui:fragment rendered="#{metric.clientReview.status eq 'Warn'}">
+                                            <ui:fragment rendered="#{not empty metric.clientReview.notes}">
+                                                <i class="icon-circle green" title="#{metric.clientReview.notes}"/>
+                                            </ui:fragment>
+                                            <ui:fragment rendered="#{empty metric.clientReview.notes}">
+                                                <i class="icon-circle green" title="Atenção"/>
+                                            </ui:fragment>
+                                        </ui:fragment>
+                                        <ui:fragment rendered="#{metric.clientReview.status eq 'Nok'}">
+                                            <ui:fragment rendered="#{not empty metric.clientReview.notes}">
+                                                <i class="icon-circle green" title="#{metric.clientReview.notes}"/>
+                                            </ui:fragment>
+                                            <ui:fragment rendered="#{empty metric.clientReview.notes}">
+                                                <i class="icon-circle green" title="Nok"/>
+                                            </ui:fragment>
+                                        </ui:fragment>
+                                    </ui:fragment>
+                                </td>
+
+                                <td class="center">
+                                    <ui:fragment rendered="#{not empty metric.timebox}">
+                                        <ui:fragment rendered="#{metric.timebox.status eq 'Ok'}">
+                                            <ui:fragment rendered="#{not empty metric.timebox.notes}">
+                                                <a onclick="showDetail('#{metric.timebox.asHtml}')">
+                                                    <i class="icon-circle green"/>
+                                                </a>
+                                            </ui:fragment>
+                                            <ui:fragment rendered="#{empty metric.timebox.notes}">
+                                                <i class="icon-circle green" title="Ok"/>
+                                            </ui:fragment>
+                                        </ui:fragment>
+                                        <ui:fragment rendered="#{metric.timebox.status eq 'Warn'}">
+                                            <ui:fragment rendered="#{not empty metric.timebox.notes}">
+                                                <a onclick="showDetail('#{metric.timebox.asHtml}')">
+                                                    <i class="icon-circle orange2"/>
+                                                </a>
+                                            </ui:fragment>
+                                            <ui:fragment rendered="#{empty metric.timebox.notes}">
+                                                <i class="icon-circle orange2" title="Atenção"/>
+                                            </ui:fragment>
+                                        </ui:fragment>
+                                        <ui:fragment rendered="#{metric.timebox.status eq 'Nok'}">
+                                            <ui:fragment rendered="#{not empty metric.timebox.notes}">
+                                                <a onclick="showDetail('#{metric.timebox.asHtml}')">
+                                                    <i class="icon-circle red"/>
+                                                </a>
+                                            </ui:fragment>
+                                            <ui:fragment rendered="#{empty metric.timebox.notes}">
+                                                <i class="icon-circle red" title="Nok"/>
+                                            </ui:fragment>
+                                        </ui:fragment>
+                                    </ui:fragment>
+                                </td>
+
+                                <td class="center">
+                                    <ui:fragment rendered="#{not empty metric.testCase}">
+                                        <ui:fragment rendered="#{metric.testCase.percentual le 15}">
+                                            <div class="badge badge-success">
+                                                #{metric.testCase.percentual}%
+                                            </div>
+                                        </ui:fragment>
+                                        <ui:fragment rendered="#{metric.testCase.percentual gt 15}">
+                                            <div class="badge badge-important">
+                                                #{metric.testCase.percentual}%
+                                            </div>
+                                        </ui:fragment>
+                                    </ui:fragment>
+                                </td>
+                            </tr>
+                        </ui:repeat>
+                    </form>
+                </tbody>
+            </table>
+        </ui:fragment>
+    </ui:define>
+
+</ui:composition>

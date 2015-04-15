@@ -1,0 +1,199 @@
+<?xml version='1.0' encoding='ISO-8859-1' ?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="_Template.xhtml"
+                xmlns:jsf="http://xmlns.jcp.org/jsf"      
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <ui:define name="head">
+        <!-- Library CSS -->
+        <link rel="stylesheet" href="/dashboardstatic/resources/assets-2/css/bootstrap.css" />
+        <link rel="stylesheet" href="/dashboardstatic/resources/assets-2/css/animations.css" media="screen" />
+        <link rel="stylesheet" href="/dashboardstatic/resources/assets-2/css/superfish.css" media="screen" />
+        <link rel="stylesheet" href="/dashboardstatic/resources/assets-2/css/prettyPhoto.css"
+              media="screen" />
+        <!-- Theme CSS -->
+        <link rel="stylesheet" href="/dashboardstatic/resources/assets-2/css/style.css" />
+        <!-- Skin -->
+        <link rel="stylesheet" href="/dashboardstatic/resources/assets-2/css/colors/blue.css" />
+        <!-- Responsive CSS -->
+        <link rel="stylesheet" href="/dashboardstatic/resources/assets-2/css/theme-responsive.css" />
+        <link rel="stylesheet" href="/dashboardstatic/resources/assets-2/css/ace.min.css" />
+        <link rel="stylesheet" href="/dashboardstatic/resources/assets-2/css/ace-responsive.min.css" />
+        <link rel="stylesheet" href="/dashboardstatic/resources/assets-2/css/ace-skins.min.css" />
+    </ui:define>
+
+    <ui:define name="content">
+        <form jsf:id="searchForm">
+            <div class="user-profile row-fluid span12">
+                <div class="profile-user-info profile-user-info-striped span10">
+                    <div class="profile-info-row">
+                        <div class="profile-info-name">
+                            Time
+                        </div>
+                        <div class="profile-info-value">
+                            <h:selectOneMenu value="#{ticketBean.selected.team}" converter="beanConverter">
+                                <f:selectItem itemLabel="Todos"/>
+                                <f:selectItems value="#{teamBean.teams}" var="team" itemLabel="#{team.name}"/>
+                            </h:selectOneMenu>
+                        </div>
+                    </div>
+                    <div class="profile-info-row">
+                        <div class="profile-info-name">
+                            Etapa
+                        </div>
+                        <div class="profile-info-value">
+                            <h:selectOneMenu value="#{ticketBean.selected.phase}">
+                                <f:selectItem itemLabel="Todas"/>
+                                <f:selectItems value="#{ticketBean.phases}" var="phase" itemLabel="#{phase}"/>
+                            </h:selectOneMenu>
+                        </div>
+                    </div>
+                    <div class="profile-info-row">
+                        <div class="profile-info-value">
+                            <button class="btn btn-small" jsf:id="btnSearch"
+                                    jsf:action="#{ticketBean.doSearch()}">
+                                <i class="icon-search"/>
+                                Buscar
+                            </button>
+                            <button class="btn btn-success btn-small" jsf:action="ticket_cad?faces-redirect=true">
+                                <i class="icon-edit"></i>
+                                Cadastrar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <div class="clearfix"/>
+
+        <form jsf:id="form1">
+            <div class="widget-header widget-header-blue">
+                <h4 class="lighter">Lista de Produtos</h4>
+            </div>
+            <table class="table table-bordered" id="data-table">
+                <thread>
+                    <tr class="table-header">
+                        <th class="center">Frente</th>
+                        <th class="center">Descrição</th>
+                        <th class="center">Solution</th>
+                        <th class="center">Coding</th>
+                        <th class="center">Test</th>
+                        <th class="center">Entregue</th>
+<!--                        <th class="center">Casos de Uso</th>-->
+                        <th class="center">ALMs</th>
+                        <th class="center">Ações</th>
+                    </tr>
+                </thread>
+                <tbody>
+                    <ui:repeat var="ticket" value="#{ticketBean.tickets}">
+                        <tr>
+                            <td class="center">
+                                #{ticket.team.name}
+                            </td>
+                            <td class="center">
+                                #{ticket.product}
+                            </td>
+                            <ui:fragment rendered="#{not empty ticket.solution}">
+                                <td bgcolor="#009900" class="center">
+                                    <b>TB #{ticket.solution.number}</b>
+                                </td>    
+                            </ui:fragment>
+                            <ui:fragment rendered="#{empty ticket.solution}">
+                                <td class="center"/>
+                            </ui:fragment>
+
+                            <ui:fragment rendered="#{not empty ticket.coding}">
+                                <td bgcolor="#009900" class="center">
+                                    <b>TB #{ticket.coding.number}</b>
+                                </td>    
+                            </ui:fragment>
+                            <ui:fragment rendered="#{empty ticket.coding}">
+                                <td class="center"/>
+                            </ui:fragment>
+
+                            <ui:fragment rendered="#{not empty ticket.test}">
+                                <td bgcolor="#009900" class="center">
+                                    <b>TB #{ticket.test.number}</b>
+                                </td>    
+                            </ui:fragment>
+                            <ui:fragment rendered="#{empty ticket.test}">
+                                <td class="center"/>
+                            </ui:fragment>
+
+                            <ui:fragment rendered="#{not empty ticket.finished}">
+                                <td bgcolor="#009900" class="center">
+                                    <b>TB #{ticket.finished.number}</b>
+                                </td>    
+                            </ui:fragment>
+                            <ui:fragment rendered="#{empty ticket.finished}">
+                                <td class="center"/>
+                            </ui:fragment>
+
+                            <td class="center">
+                                <ui:fragment rendered="#{not ticketBean.showALMs}">
+                                    <h:commandLink value="#{ticket.alms.size()} ALMs" disabled="#{empty ticket.alms}">
+                                        <f:setPropertyActionListener target="#{ticketBean.showALMs}" value="#{true}"/>
+                                        <f:ajax render="form1"/>
+                                    </h:commandLink>
+                                </ui:fragment>
+
+                                <ui:fragment rendered="#{ticketBean.showALMs}">
+                                    <h:commandLink value="Fechar">
+                                        <i class="icon-remove red"/>
+                                        <f:setPropertyActionListener target="#{ticketBean.showALMs}" value="#{false}"/>
+                                        <f:ajax render="form1"/>
+                                    </h:commandLink>
+                                    <br/>
+                                    <ui:repeat var="alm" value="#{ticket.alms}">
+                                        #{alm.title}(#{alm.status})
+                                        <button class="btn btn-success btn-minier" title="Marcar como finalizado" 
+                                                jsf:id="btnFinalizeAlm"
+                                                jsf:rendered="#{alm.status eq 'OPEN'}">
+                                            <i class="icon-ok"/>
+                                        </button>
+                                        <br/>
+                                    </ui:repeat>
+                                </ui:fragment>
+                            </td>
+
+                            <td class="center">
+                                <button class="btn btn-mini btn-danger" title="Remover"
+                                        jsf:action="#{ticketBean.remove()}">
+                                    <i class="icon-trash"/>
+                                    <f:setPropertyActionListener target="#{ticketBean.selected}" value="#{ticket}"/>
+                                </button>
+                                <button class="btn btn-mini btn-warning" title="Editar"
+                                        jsf:action="#{ticketBean.edit()}">
+                                    <i class="icon-edit"/>
+                                    <f:setPropertyActionListener target="#{ticketBean.selected}" value="#{ticket}"/>
+                                </button>
+                            </td>
+                        </tr>
+                    </ui:repeat>
+                </tbody>
+            </table>
+        </form>
+
+        <form jsf:id="pagForm">
+            <div class="wizard-actions">
+                <button class="btn btn-small" jsf:id="btnPrev"
+                        jsf:action="#{ticketBean.prev()}"
+                        jsf:disabled="#{ticketBean.page lt ticketBean.max}">
+                    <i class="icon-arrow-left"></i>
+                    Anterior
+                </button>
+                <button class="btn btn-next btn-small" jsf:id="btnNext"
+                        jsf:action="#{ticketBean.next()}"
+                        jsf:disabled="#{empty ticketBean.tickets
+                                        or ticketBean.tickets.size() lt ticketBean.max}">
+                    Próximo
+                    <i class="icon-arrow-right"></i>
+                </button>
+            </div>
+        </form>
+    </ui:define>
+</ui:composition>
