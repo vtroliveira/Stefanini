@@ -36,12 +36,9 @@ public class Utils implements Serializable {
     
     public Date today() {
         final DateTime dt = new DateTime()
-                                .hourOfDay()
-                                .setCopy(0)
-                                .minuteOfHour()
-                                .setCopy(0)
-                                .secondOfMinute()
-                                .setCopy(0)
+                                .hourOfDay().setCopy(0)
+                                .minuteOfHour().setCopy(0)
+                                .secondOfMinute().setCopy(0)
                                 .toDateTime();
         
         return dt.toDate();
