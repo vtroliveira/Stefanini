@@ -39,7 +39,7 @@
                                              value="#{cadLogbookBean.log.team}" converter="beanConverter"
                                              disabled="#{not empty cadLogbookBean.log.team}">
                                 <f:selectItems value="#{teamBean.teams}" var="team" itemLabel="#{team.name}"/>
-                                <f:ajax event="valueChange" render="cbEmployees" execute="@form"/>
+                                <f:ajax event="valueChange" render="cbEmployees" immediate="true" execute="@form"/>
                             </h:selectOneMenu>
                         </div>
                     </div>
