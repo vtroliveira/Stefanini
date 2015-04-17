@@ -42,10 +42,9 @@ public class UserLogged implements Serializable {
         loadPermissions();
     }
     
-    public String logout() {
+    public void logout() {
         this.user = null;
         invalidate();
-        return "login?faces-redirect-true";
     }
     
     public boolean isActive() {
