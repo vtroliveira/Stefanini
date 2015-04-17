@@ -5,6 +5,7 @@
  */
 package br.com.bob.dashboard.web.context.handler;
 
+import javax.enterprise.context.RequestScoped;
 import javax.enterprise.event.Event;
 import javax.enterprise.inject.Any;
 import javax.inject.Inject;
@@ -14,6 +15,7 @@ import lombok.Getter;
  *
  * @author Vitor
  */
+@RequestScoped
 public class ExceptionDispatcher {
     
     @Inject @Any @Getter private Event<Throwable> event;
