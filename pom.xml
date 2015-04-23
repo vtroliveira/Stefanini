@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>br.com.stefanini.bob.dashboard</groupId>
     <artifactId>bob-dashboard</artifactId>
-    <version>2.0</version>
+    <version>2.1</version>
     <packaging>war</packaging>
 
     <name>bob-dashboard</name>
@@ -19,6 +19,7 @@
         <commons-io.version>2.4</commons-io.version>
         <hsqldb.version>2.3.2</hsqldb.version>
         <joda-time.version>2.7</joda-time.version>
+        <javamelody.version>1.53.0</javamelody.version>
     </properties>
     
     <dependencies>
@@ -120,6 +121,13 @@
             <groupId>joda-time</groupId>
             <artifactId>joda-time</artifactId>
             <version>${joda-time.version}</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>net.bull.javamelody</groupId>
+            <artifactId>javamelody-core</artifactId>
+            <version>${javamelody.version}</version>
+            <scope>runtime</scope>
         </dependency>
     </dependencies>
 
