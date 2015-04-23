@@ -67,4 +67,9 @@ public class User implements Serializable {
     public boolean isActive() {
         return ActiveStatus.ACTIVE.equals(status);
     }
+    
+    public User withoutPassword() {
+        this.password = null;
+        return this;
+    }
 }

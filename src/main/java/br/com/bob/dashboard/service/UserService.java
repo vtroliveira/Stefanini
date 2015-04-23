@@ -62,6 +62,10 @@ public class UserService {
     
     public User getUser(final String login, final String password) {
         final String encoded = DigestUtils.sha1Hex(password);
+        return getUserEncryptedPwd(login, encoded);
+    }
+    
+    public User getUserEncryptedPwd(final String login, final String encoded) {
         final User get = userDAO.findByLoginEqualAndPasswordEqual(login, encoded);
         if (get != null)
             return get;
@@ -116,5 +120,17 @@ public class UserService {
     
     public List<Profile> getProfiles() {
         return profileDAO.findAll();
+    }
+    
+    public List<User> getUsers() {
+        return userDAO.findAll();
+    }
+    
+    public User getUser(final String login) {
+        final User found = userDAO.findByLoginEqual(login);
+        if (found == null)
+            throw new BusinessException("Usuário não encontrado");
+        
+        return found;
     }
 }

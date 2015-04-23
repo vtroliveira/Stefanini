@@ -6,7 +6,7 @@
 package br.com.bob.dashboard.web.beans;
 
 import br.com.bob.dashboard.model.User;
-import br.com.bob.dashboard.model.repository.UserDAO;
+import br.com.bob.dashboard.service.UserService;
 import br.com.bob.dashboard.web.beans.util.ManagedBean;
 import java.io.Serializable;
 import java.util.List;
@@ -24,10 +24,10 @@ import lombok.Setter;
 public class UsersBean extends ManagedBean implements Serializable {
     private static final String PARAM_USER = "user";
     @Getter @Setter private User selected;
-    @Inject private UserDAO dao;
+    @Inject private UserService service;
     
     public List<User> getAllUsers() {
-        return dao.findAll();
+        return service.getUsers();
     }
     
     public String updateProfile() {

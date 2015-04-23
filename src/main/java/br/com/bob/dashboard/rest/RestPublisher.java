@@ -21,6 +21,7 @@ public class RestPublisher extends Application {
     public Set<Class<?>> getClasses() {
         final Set set = new HashSet<>();
         set.add(SonarRest.class);
+        set.add(LoginRest.class);
         return set;
     }
 }
