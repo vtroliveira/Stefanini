@@ -20,6 +20,8 @@
         <hsqldb.version>2.3.2</hsqldb.version>
         <joda-time.version>2.7</joda-time.version>
         <javamelody.version>1.53.0</javamelody.version>
+        <junit.version>4.12</junit.version>
+        <weld.version>2.2.7.Final</weld.version>
     </properties>
     
     <dependencies>
@@ -128,6 +130,42 @@
             <artifactId>javamelody-core</artifactId>
             <version>${javamelody.version}</version>
             <scope>runtime</scope>
+        </dependency>
+        
+        <!-- Test Dependencies -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.apache.deltaspike.modules</groupId>
+            <artifactId>deltaspike-test-control-module-api</artifactId>
+            <version>${deltaspike.version}</version>
+            <scope>test</scope>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.apache.deltaspike.cdictrl</groupId>
+            <artifactId>deltaspike-cdictrl-weld</artifactId>
+            <version>${deltaspike.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.deltaspike.modules</groupId>
+            <artifactId>deltaspike-test-control-module-impl</artifactId>
+            <version>${deltaspike.version}</version>
+            <scope>test</scope>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.jboss.weld.se</groupId>
+            <artifactId>weld-se-core</artifactId>
+            <version>${weld.version}</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 

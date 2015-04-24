@@ -20,7 +20,7 @@ import org.apache.deltaspike.core.api.projectstage.ProjectStage;
  *
  * @author Vitor
  */
-@Exclude(ifProjectStage = ProjectStage.Production.class)
+@Exclude(exceptIfProjectStage = {ProjectStage.Development.class, ProjectStage.UnitTest.class})
 public class DevEntityManagerProducer implements Serializable {
     
     @Produces @ApplicationScoped

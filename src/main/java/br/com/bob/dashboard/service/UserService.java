@@ -16,6 +16,7 @@ import br.com.bob.dashboard.model.repository.UserDAO;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
+import javax.persistence.NonUniqueResultException;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.deltaspike.jpa.api.transaction.Transactional;
 
@@ -74,7 +75,11 @@ public class UserService {
     }
     
     public boolean exists(final String login) {
-        return userDAO.findByLoginEqual(login) != null;
+        try {
+            return userDAO.findByLoginEqual(login) != null;
+        } catch (NonUniqueResultException e) {
+            return true;
+        }
     }
     
     @Transactional
